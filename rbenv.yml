@@ -1,0 +1,22 @@
+---
+- hosts: s137
+  user: deployer
+  vars:
+    ruby_version: "ree-1.8.7-2012.02"
+  tasks:
+    - name: Install rbenv
+      shell: curl -L https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
+    - name: Update bashrc
+      shell: echo '{{item}}' >> /home/deployer/.bashrc
+      with_items:
+        - '# rbenv begin'
+        - 'export RBENV_ROOT="${HOME}/.rbenv"'
+        - 'if [ -d "${RBENV_ROOT}" ]; then'
+        - '  export PATH="${RBENV_ROOT}/bin:${PATH}"'
+        - '  eval "$(rbenv init -)"'
+        - "fi"
+        - '# rbenv end'
+    - name: install ruby $ruby_version
+      action: shell export CFLAGS="-O2 -fno-tree-dce -fno-optimize-sibling-calls" && CONFIGURE_OPTS="--no-tcmalloc" /home/deployer/.rbenv/bin/rbenv install $ruby_version
+    - name: make ruby global $ruby_version
+      action: shell /home/deployer/.rbenv/bin/rbenv global $ruby_version

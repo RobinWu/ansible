@@ -1,0 +1,16 @@
+---
+  - action: raw apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+  - apt_repository: repo='deb http://ftp.osuosl.org/pub/mariadb/repo/5.5/ubuntu precise main'
+  - apt: update_cache=yes
+  - apt: pkg=mariadb-server
+  # 解决mysql2 gem的无法安装问题
+  - apt: pkg=libmariadbclient-dev
+  # ansible mysql module
+  - apt: pkg=python-mysqldb
+  - raw: mysqladmin -u root password {{mysql_root_password}}
+  - copy: src=.my.cnf dest=~/.my.cnf
+  - ini_file: dest=~/.my.cnf section=client option=password value={{mysql_root_password}}
+  # 安装 xtrabackup 数据库备份工具
+  - apt_repository: repo=ppa:percona-daily/percona-xtrabackup
+  - apt: update_cache=yes
+  - apt: pkg=xtrabackup

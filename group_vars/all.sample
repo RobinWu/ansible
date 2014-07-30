@@ -1,0 +1,3 @@
+deploy_user: deployer
+pub_key: /Users/i/.ssh/id_rsa.pub
+mysql_root_password: password

@@ -1,0 +1,21 @@
+---
+  - lineinfile: dest=/etc/ssh/sshd_config state=present regexp="^AcceptEnv LANG" line="#AcceptEnv LANG LC_*"
+    notify: restart ssh
+  - apt: update_cache=yes cache_valid_time=3600
+  - apt: upgrade=yes
+  - apt: pkg={{ item }}
+    with_items:
+      - curl
+      - git-core
+      - python-software-properties
+      - imagemagick
+      - libsqlite3-dev
+      - build-essential
+      - tklib
+      - zlib1g-dev
+      - libssl-dev
+      - libreadline-gplv2-dev
+      - libxml2
+      - libxml2-dev
+      - libxslt1-dev
+      - libmysqlclient-dev

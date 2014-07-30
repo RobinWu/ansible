@@ -1,0 +1,4 @@
+---
+  - apt_repository: repo=ppa:chris-lea/node.js
+  - apt: update_cache=yes
+  - apt: pkg=nodejs

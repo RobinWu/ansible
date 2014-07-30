@@ -1,0 +1,13 @@
+---
+- hosts: all
+  user: root
+  roles:
+    - common
+    - add_deploy_user
+    - nginx
+    - nodejs
+
+- hosts: all
+  user: root
+  roles:
+    - reboot

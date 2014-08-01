@@ -1,11 +1,11 @@
 ---
-- hosts: s136
+- hosts: s137
   user: root
   vars:
     deploy_user: deployer
     pub_key: /home/agideo/.ssh/id_rsa.pub
     timezone: "Asia/Shanghai"
-    hostname: s136
+    hostname: s137
     mysql_root_password: ""
   roles:
     - common
@@ -22,7 +22,7 @@
     - name: Set hostname
       shell: 'hostname {{hostname}}'
 
-- hosts: s136
+- hosts: s137
   user: root
   roles:
     - reboot

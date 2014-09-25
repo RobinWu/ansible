@@ -1,0 +1,27 @@
+---
+- hosts: s141
+  user: root
+  vars:
+    deploy_user: deployer
+    pub_key: /home/agideo/.ssh/id_rsa.pub
+    timezone: "Asia/Shanghai"
+    hostname: s141
+    mysql_root_password: "MjO3xwzC3y"
+  roles:
+    - common
+    - timezone
+    - add_deploy_user
+    - nginx
+    - nodejs
+    - mysql
+
+  tasks:
+    - name: Edit /etc/hostname
+      copy: content='{{hostname}}' dest='/etc/hostname' force='yes'
+    - name: Set hostname
+      shell: 'hostname {{hostname}}'
+
+- hosts: s141
+  user: root
+  roles:
+    - reboot

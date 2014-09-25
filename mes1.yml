@@ -1,0 +1,28 @@
+---
+- hosts: mes1
+  user: root
+  vars:
+    deploy_user: deployer
+    pub_key: /home/agideo/.ssh/id_rsa.pub
+    timezone: "Asia/Shanghai"
+    hostname: mes1
+    mysql_root_password: ""
+  roles:
+    - common
+    - timezone
+    - add_deploy_user
+    - nginx
+    - nodejs
+    - redis
+    - mysql
+
+  tasks:
+    - name: Edit /etc/hostname
+      copy: content='{{hostname}}' dest='/etc/hostname' force='yes'
+    - name: Set hostname
+      shell: 'hostname {{hostname}}'
+
+- hosts: mes1
+  user: root
+  roles:
+    - reboot

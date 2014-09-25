@@ -1,0 +1,30 @@
+---
+- hosts: s135
+  user: ubuntu
+  sudo: yes
+  vars:
+    deploy_user: deployer
+    pub_key: /home/agideo/.ssh/id_rsa.pub
+    timezone: "Asia/Shanghai"
+    hostname: s135
+    mysql_root_password: "DFCdGMmQ3U"
+  roles:
+    - common
+    - timezone
+    - add_deploy_user
+    - nginx
+    - nodejs
+    - redis
+    - mysql
+
+  tasks:
+    - name: Edit /etc/hostname
+      copy: content='{{hostname}}' dest='/etc/hostname' force='yes'
+    - name: Set hostname
+      shell: 'hostname {{hostname}}'
+
+- hosts: s135
+  user: ubuntu
+  sudo: yes
+  roles:
+    - reboot

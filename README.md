@@ -1,7 +1,6 @@
 ## 部署
-`ansible-playbook -i local local.yml`
+`ansible-playbook -i hosts *.yml`
 
 ### 文件说明
-`local` 包含服务器地址
-
-`local.yml` 包含安装的组件
+`hosts` 包含服务器地址
+`*.yml` 包含安装的组件
